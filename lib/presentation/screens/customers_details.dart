@@ -35,7 +35,10 @@ class CustomerDetailScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+            colors: [
+              Color.fromARGB(255, 149, 175, 3),
+              Color.fromARGB(255, 0, 89, 255),
+            ],
           ),
         ),
         child: Column(

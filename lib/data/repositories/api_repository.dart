@@ -26,6 +26,9 @@ class ApiRepository {
       log("Login Status: ${res.statusCode}");
 
       if (res.statusCode == 200) {
+        if (res.body.trim().isEmpty) {
+          throw Exception("Server returned empty response");
+        }
         final data = jsonDecode(res.body);
         final user = UserModel.fromJson(data);
 
@@ -38,14 +41,25 @@ class ApiRepository {
           );
           return user;
         } else {
-          throw Exception("Token missing in response");
+          throw Exception(
+            "Login Failed: No token received",
+          );
         }
+      } else if (res.statusCode == 401) {
+        throw Exception("Invalid Email or Password");
+      } else if (res.statusCode == 404) {
+        throw Exception("Server Not Found (404)");
       } else {
         throw Exception("Login failed: ${res.statusCode}");
       }
     } catch (e) {
       log("Login Error: $e");
-      rethrow;
+
+      final cleanMessage = e.toString().replaceAll(
+        "Exception: ",
+        "",
+      );
+      throw Exception(cleanMessage);
     }
   }
 
@@ -58,8 +72,9 @@ class ApiRepository {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString(PrefKeys.token);
 
-    if (token == null)
+    if (token == null) {
       throw Exception("Unauthorized: No token found");
+    }
 
     final urlString =
         "${ApiConstants.baseUrl}${ApiConstants.customerListEndpoint}?searchquery=$searchQuery&pageNo=$pageNo&pageSize=$pageSize&SortyBy=$sortBy";
@@ -78,7 +93,6 @@ class ApiRepository {
         if (res.body.trim().isEmpty) return [];
 
         final data = jsonDecode(res.body);
-
         final list =
             (data['CustomerList'] ?? []) as List<dynamic>;
 
@@ -86,14 +100,20 @@ class ApiRepository {
             .map((e) => CustomerModel.fromJson(e))
             .toList();
       } else if (res.statusCode == 401) {
-        throw Exception("Unauthorized");
+        throw Exception(
+          "Session Expired. Please Login Again.",
+        );
       } else {
         throw Exception(
           "Failed to fetch customers: ${res.statusCode}",
         );
       }
     } catch (e) {
-      rethrow;
+      final cleanMessage = e.toString().replaceAll(
+        "Exception: ",
+        "",
+      );
+      throw Exception(cleanMessage);
     }
   }
 }

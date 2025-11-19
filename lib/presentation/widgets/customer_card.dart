@@ -23,7 +23,7 @@ class CustomerCard extends StatelessWidget {
         vertical: 8,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 203, 224, 213),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(

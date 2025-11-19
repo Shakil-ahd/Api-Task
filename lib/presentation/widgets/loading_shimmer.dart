@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CustomerListShimmer extends StatelessWidget {
-  const CustomerListShimmer({Key? key}) : super(key: key);
+  const CustomerListShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,12 @@ class CustomerListShimmer extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
           child: Shimmer.fromColors(
-            baseColor: Colors.grey.shade300,
+            baseColor: const Color.fromARGB(
+              255,
+              203,
+              224,
+              213,
+            ),
             highlightColor: Colors.grey.shade100,
             child: Row(
               children: [

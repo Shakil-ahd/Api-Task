@@ -6,7 +6,7 @@ import '../../logic/customer_bloc/customer_event.dart';
 import '../../logic/customer_bloc/customer_state.dart';
 import '../widgets/customer_card.dart';
 import '../widgets/loading_shimmer.dart';
-import 'user_details_screen.dart';
+import 'user_setting_screen.dart';
 
 class CustomerListScreen extends StatelessWidget {
   const CustomerListScreen({Key? key}) : super(key: key);
@@ -77,7 +77,10 @@ class _CustomerListViewState
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+            colors: [
+              Color.fromARGB(255, 149, 175, 3),
+              Color.fromARGB(255, 0, 89, 255),
+            ],
           ),
         ),
         child: Column(
@@ -172,7 +175,12 @@ class _CustomerListViewState
 
                       return RefreshIndicator(
                         onRefresh: _onRefresh,
-                        color: const Color(0xFF6A11CB),
+                        color: const Color.fromARGB(
+                          255,
+                          144,
+                          143,
+                          146,
+                        ),
                         child: ListView.builder(
                           controller: _scrollController,
                           physics:
