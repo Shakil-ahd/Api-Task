@@ -18,7 +18,7 @@ class CustomerBloc
     CustomerFetchEvent event,
     Emitter<CustomerState> emit,
   ) async {
-    if (state.hasReachedMax) return;
+    if (state.hasReachedMax || state.isFetching) return;
 
     try {
       if (state.status == CustomerStatus.initial) {
@@ -32,9 +32,12 @@ class CustomerBloc
             customers: customers,
             hasReachedMax: customers.length < _pageSize,
             pageNo: 2,
+            isFetching: false,
           ),
         );
       }
+
+      emit(state.copyWith(isFetching: true));
 
       final customers = await repository.getCustomers(
         pageNo: state.pageNo,
@@ -42,7 +45,12 @@ class CustomerBloc
       );
 
       if (customers.isEmpty) {
-        emit(state.copyWith(hasReachedMax: true));
+        emit(
+          state.copyWith(
+            hasReachedMax: true,
+            isFetching: false,
+          ),
+        );
       } else {
         emit(
           state.copyWith(
@@ -51,6 +59,7 @@ class CustomerBloc
               ..addAll(customers),
             hasReachedMax: customers.length < _pageSize,
             pageNo: state.pageNo + 1,
+            isFetching: false,
           ),
         );
       }
@@ -62,6 +71,7 @@ class CustomerBloc
             "Exception: ",
             "",
           ),
+          isFetching: false,
         ),
       );
     }
@@ -77,6 +87,7 @@ class CustomerBloc
         customers: [],
         hasReachedMax: false,
         pageNo: 1,
+        isFetching: false,
       ),
     );
     add(CustomerFetchEvent());

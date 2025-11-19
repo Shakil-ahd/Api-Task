@@ -9,6 +9,7 @@ class CustomerState extends Equatable {
   final bool hasReachedMax;
   final int pageNo;
   final String errorMessage;
+  final bool isFetching;
 
   const CustomerState({
     this.status = CustomerStatus.initial,
@@ -16,6 +17,7 @@ class CustomerState extends Equatable {
     this.hasReachedMax = false,
     this.pageNo = 1,
     this.errorMessage = "",
+    this.isFetching = false,
   });
 
   CustomerState copyWith({
@@ -24,6 +26,7 @@ class CustomerState extends Equatable {
     bool? hasReachedMax,
     int? pageNo,
     String? errorMessage,
+    bool? isFetching,
   }) {
     return CustomerState(
       status: status ?? this.status,
@@ -31,6 +34,7 @@ class CustomerState extends Equatable {
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       pageNo: pageNo ?? this.pageNo,
       errorMessage: errorMessage ?? this.errorMessage,
+      isFetching: isFetching ?? this.isFetching,
     );
   }
 
@@ -41,5 +45,6 @@ class CustomerState extends Equatable {
     hasReachedMax,
     pageNo,
     errorMessage,
+    isFetching,
   ];
 }
