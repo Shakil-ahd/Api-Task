@@ -18,9 +18,7 @@ class CustomerModel {
     this.lastTransactionDate,
   });
 
-  factory CustomerModel.fromJson(
-    Map<String, dynamic> json,
-  ) {
+  factory CustomerModel.fromJson(Map<String, dynamic> json) {
     return CustomerModel(
       id: json['Id'] ?? 0,
       name: json['Name'] ?? '',
@@ -28,8 +26,7 @@ class CustomerModel {
       phone: json['Phone'],
       imagePath: json['ImagePath'],
 
-      totalDue:
-          (json['TotalDue'] as num?)?.toDouble() ?? 0.0,
+      totalDue: (json['TotalDue'] as num?)?.toDouble() ?? 0.0,
       lastTransactionDate: json['LastTransactionDate'],
     );
   }

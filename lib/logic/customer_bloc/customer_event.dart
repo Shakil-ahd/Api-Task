@@ -5,6 +5,11 @@ abstract class CustomerEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CustomerFetchEvent extends CustomerEvent {}
+class CustomerFetchEvent extends CustomerEvent {
+  final int page;
 
-class CustomerRefreshEvent extends CustomerEvent {}
+  CustomerFetchEvent({required this.page});
+
+  @override
+  List<Object> get props => [page];
+}

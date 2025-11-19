@@ -18,6 +18,7 @@ class CustomerCard extends StatelessWidget {
         : "";
 
     return Container(
+      width: double.infinity,
       margin: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 8,
@@ -81,6 +82,7 @@ class CustomerCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 16),
+
                 Expanded(
                   child: Column(
                     crossAxisAlignment:
@@ -95,6 +97,7 @@ class CustomerCard extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
+
                       if (customer.address != null &&
                           customer.address!.isNotEmpty)
                         Padding(
@@ -124,7 +127,9 @@ class CustomerCard extends StatelessWidget {
                             ],
                           ),
                         ),
+
                       const SizedBox(height: 4),
+
                       Row(
                         children: [
                           const Icon(
@@ -133,11 +138,16 @@ class CustomerCard extends StatelessWidget {
                             color: Colors.grey,
                           ),
                           const SizedBox(width: 4),
-                          Text(
-                            customer.phone ?? "N/A",
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12,
+                          Expanded(
+                            child: Text(
+                              customer.phone ?? "N/A",
+                              maxLines: 1,
+                              overflow:
+                                  TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                         ],
@@ -145,6 +155,9 @@ class CustomerCard extends StatelessWidget {
                     ],
                   ),
                 ),
+
+                const SizedBox(width: 8),
+
                 Column(
                   crossAxisAlignment:
                       CrossAxisAlignment.end,
@@ -157,14 +170,22 @@ class CustomerCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 2),
-                    Text(
-                      "\$${customer.totalDue.toStringAsFixed(2)}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: customer.totalDue > 0
-                            ? Colors.red
-                            : Colors.green[700],
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxWidth: 80,
+                      ),
+                      child: Text(
+                        "\$${customer.totalDue.toStringAsFixed(2)}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: customer.totalDue > 0
+                              ? Colors.red
+                              : Colors.green[700],
+                        ),
                       ),
                     ),
                   ],
