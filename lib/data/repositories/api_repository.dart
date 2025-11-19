@@ -11,7 +11,6 @@ class ApiRepository {
     String username,
     String password,
   ) async {
-    // Constructing URL manually as per your snippet
     final urlString =
         "${ApiConstants.baseUrl}${ApiConstants.loginEndpoint}?UserName=$username&Password=$password&ComId=${ApiConstants.defaultComId}";
     final uri = Uri.parse(urlString);
@@ -19,7 +18,6 @@ class ApiRepository {
     try {
       log("Attempting Login: $uri");
 
-      // Using GET as per your provided code snippet
       final res = await http.get(
         uri,
         headers: {"Accept": "application/json"},
@@ -80,7 +78,7 @@ class ApiRepository {
         if (res.body.trim().isEmpty) return [];
 
         final data = jsonDecode(res.body);
-        // Mapping based on previous knowledge of structure (CustomerList key)
+
         final list =
             (data['CustomerList'] ?? []) as List<dynamic>;
 

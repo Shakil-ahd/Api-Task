@@ -6,7 +6,6 @@ class CustomerModel {
   final String? imagePath;
   final double totalDue;
   final String? lastTransactionDate;
-
   var address;
 
   CustomerModel({
@@ -28,7 +27,7 @@ class CustomerModel {
       email: json['Email'],
       phone: json['Phone'],
       imagePath: json['ImagePath'],
-      // Handle int or double from JSON
+
       totalDue:
           (json['TotalDue'] as num?)?.toDouble() ?? 0.0,
       lastTransactionDate: json['LastTransactionDate'],

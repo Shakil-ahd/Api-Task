@@ -19,104 +19,125 @@ class CustomerDetailScreen extends StatelessWidget {
         : "";
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(title: const Text("Customer Details")),
-      body: SingleChildScrollView(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: const Text(
+          "Customer Details",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+          ),
+        ),
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(
-                vertical: 32,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(32),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade200,
-                    blurRadius: 10,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
+            const SizedBox(height: 100),
+
+            Center(
               child: Column(
                 children: [
                   Hero(
                     tag: 'customer_image_${customer.id}',
                     child: Container(
-                      height: 120,
-                      width: 120,
+                      padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.grey[100],
                         border: Border.all(
-                          color: Colors.grey.shade200,
+                          color: Colors.white,
                           width: 3,
                         ),
                       ),
-                      child: ClipOval(
-                        child: imageUrl.isNotEmpty
-                            ? Image.network(
-                                imageUrl,
-                                fit: BoxFit.cover,
-                                errorBuilder:
-                                    (_, __, ___) =>
-                                        _buildPlaceholder(),
+                      child: CircleAvatar(
+                        radius: 60,
+                        backgroundColor: Colors.white,
+                        backgroundImage: imageUrl.isNotEmpty
+                            ? NetworkImage(imageUrl)
+                            : null,
+                        child: imageUrl.isEmpty
+                            ? Icon(
+                                Icons.person,
+                                size: 60,
+                                color: Colors.grey[300],
                               )
-                            : _buildPlaceholder(),
+                            : null,
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
                   Text(
                     customer.name,
-                    textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 26,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
+                    textAlign: TextAlign.center,
                   ),
-                  if (customer.email != null &&
-                      customer.email!.isNotEmpty)
+                  if (customer.email != null)
                     Text(
                       customer.email!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
-                        color: Colors.grey[600],
+                        color: Colors.white70,
                       ),
                     ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  _buildDetailCard(
-                    Icons.phone,
-                    "Phone",
-                    customer.phone ?? "N/A",
+            const SizedBox(height: 30),
+
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
                   ),
-                  _buildDetailCard(
-                    Icons.location_on,
-                    "Address",
-                    customer.address ?? "N/A",
+                ),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    children: [
+                      _buildDetailCard(
+                        Icons.phone_android,
+                        "Phone",
+                        customer.phone ?? "N/A",
+                        Colors.orange,
+                      ),
+                      _buildDetailCard(
+                        Icons.location_on_rounded,
+                        "Address",
+                        customer.address ?? "N/A",
+                        Colors.purple,
+                      ),
+                      _buildDetailCard(
+                        Icons.attach_money_rounded,
+                        "Total Due",
+                        "\$${customer.totalDue.toStringAsFixed(2)}",
+                        Colors.red,
+                        isBold: true,
+                      ),
+                      _buildDetailCard(
+                        Icons.history_rounded,
+                        "Last Transaction",
+                        customer.lastTransactionDate ??
+                            "N/A",
+                        Colors.blue,
+                      ),
+                    ],
                   ),
-                  _buildDetailCard(
-                    Icons.attach_money,
-                    "Total Due",
-                    "\$${customer.totalDue.toStringAsFixed(2)}",
-                    isHighlighted: true,
-                  ),
-                  _buildDetailCard(
-                    Icons.calendar_today,
-                    "Last Transaction",
-                    customer.lastTransactionDate ?? "N/A",
-                  ),
-                ],
+                ),
               ),
             ),
           ],
@@ -125,67 +146,68 @@ class CustomerDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPlaceholder() {
-    return Container(
-      color: Colors.grey[100],
-      child: Icon(
-        Icons.person,
-        size: 60,
-        color: Colors.grey[400],
-      ),
-    );
-  }
-
   Widget _buildDetailCard(
     IconData icon,
-    String label,
-    String value, {
-    bool isHighlighted = false,
+    String title,
+    String value,
+    Color color, {
+    bool isBold = false,
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade100,
-            blurRadius: 5,
-            offset: const Offset(0, 2),
+            color: Colors.grey.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
           ),
         ],
+        border: Border.all(color: Colors.grey.shade100),
       ),
-      child: ListTile(
-        leading: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: isHighlighted
-                ? Colors.red.shade50
-                : Colors.blue.shade50,
-            borderRadius: BorderRadius.circular(8),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: color, size: 24),
           ),
-          child: Icon(
-            icon,
-            color: isHighlighted ? Colors.red : Colors.blue,
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: isBold
+                        ? FontWeight.bold
+                        : FontWeight.w600,
+                    color: isBold
+                        ? Colors.red
+                        : Colors.black87,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        title: Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey[600],
-          ),
-        ),
-        subtitle: Text(
-          value,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: isHighlighted
-                ? Colors.red
-                : Colors.black87,
-          ),
-        ),
+        ],
       ),
     );
   }

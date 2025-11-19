@@ -13,17 +13,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 1. RepositoryProvider makes ApiRepository available to Blocs
     return RepositoryProvider(
       create: (context) => ApiRepository(),
-      // 2. BlocProvider wraps MaterialApp so AuthBloc is global
+
       child: BlocProvider(
         create: (context) => AuthBloc(
           repository: context.read<ApiRepository>(),
         ),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Invoice App',
+          title: 'Customer Invoice App',
           theme: ThemeData(
             primarySwatch: Colors.blue,
             useMaterial3: true,
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
-          // 3. App starts at SplashScreen
+
           home: const SplashScreen(),
         ),
       ),
