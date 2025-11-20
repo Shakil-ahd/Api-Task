@@ -6,23 +6,18 @@ import '../../utils/app_constants.dart';
 class CustomerCard extends StatelessWidget {
   final CustomerModel customer;
 
-  const CustomerCard({Key? key, required this.customer})
-    : super(key: key);
+  const CustomerCard({super.key, required this.customer});
 
   @override
   Widget build(BuildContext context) {
     final imageUrl =
-        (customer.imagePath != null &&
-            customer.imagePath!.isNotEmpty)
+        (customer.imagePath != null && customer.imagePath!.isNotEmpty)
         ? "${ApiConstants.imageBase}${customer.imagePath}"
         : "";
 
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 8,
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 203, 224, 213),
         borderRadius: BorderRadius.circular(16),
@@ -42,9 +37,7 @@ class CustomerCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => CustomerDetailScreen(
-                  customer: customer,
-                ),
+                builder: (_) => CustomerDetailScreen(customer: customer),
               ),
             );
           },
@@ -60,22 +53,15 @@ class CustomerCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.grey[100],
-                      border: Border.all(
-                        color: Colors.grey.shade200,
-                        width: 1,
-                      ),
+                      border: Border.all(color: Colors.grey.shade200, width: 1),
                     ),
                     child: ClipOval(
                       child: imageUrl.isNotEmpty
                           ? Image.network(
                               imageUrl,
                               fit: BoxFit.cover,
-                              errorBuilder:
-                                  (
-                                    context,
-                                    error,
-                                    stackTrace,
-                                  ) => _buildPlaceholder(),
+                              errorBuilder: (context, error, stackTrace) =>
+                                  _buildPlaceholder(),
                             )
                           : _buildPlaceholder(),
                     ),
@@ -85,8 +71,7 @@ class CustomerCard extends StatelessWidget {
 
                 Expanded(
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         customer.name,
@@ -101,9 +86,7 @@ class CustomerCard extends StatelessWidget {
                       if (customer.address != null &&
                           customer.address!.isNotEmpty)
                         Padding(
-                          padding: const EdgeInsets.only(
-                            top: 2,
-                          ),
+                          padding: const EdgeInsets.only(top: 2),
                           child: Row(
                             children: [
                               const Icon(
@@ -116,8 +99,7 @@ class CustomerCard extends StatelessWidget {
                                 child: Text(
                                   customer.address!,
                                   maxLines: 1,
-                                  overflow:
-                                      TextOverflow.ellipsis,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     color: Colors.grey[600],
                                     fontSize: 12,
@@ -142,8 +124,7 @@ class CustomerCard extends StatelessWidget {
                             child: Text(
                               customer.phone ?? "N/A",
                               maxLines: 1,
-                              overflow:
-                                  TextOverflow.ellipsis,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: Colors.grey[600],
                                 fontSize: 12,
@@ -159,21 +140,15 @@ class CustomerCard extends StatelessWidget {
                 const SizedBox(width: 8),
 
                 Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
                       "Due Amount",
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.grey[500],
-                      ),
+                      style: TextStyle(fontSize: 10, color: Colors.grey[500]),
                     ),
                     const SizedBox(height: 2),
                     ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxWidth: 80,
-                      ),
+                      constraints: const BoxConstraints(maxWidth: 80),
                       child: Text(
                         "\$${customer.totalDue.toStringAsFixed(2)}",
                         maxLines: 1,
@@ -199,12 +174,6 @@ class CustomerCard extends StatelessWidget {
   }
 
   Widget _buildPlaceholder() {
-    return Center(
-      child: Icon(
-        Icons.person,
-        color: Colors.grey[400],
-        size: 30,
-      ),
-    );
+    return Center(child: Icon(Icons.person, color: Colors.grey[400], size: 30));
   }
 }

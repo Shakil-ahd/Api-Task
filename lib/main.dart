@@ -9,7 +9,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,8 @@ class MyApp extends StatelessWidget {
       create: (context) => ApiRepository(),
 
       child: BlocProvider(
-        create: (context) => AuthBloc(
-          repository: context.read<ApiRepository>(),
-        ),
+        create: (context) =>
+            AuthBloc(repository: context.read<ApiRepository>()),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Customer Invoice App',
@@ -27,16 +26,13 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             useMaterial3: true,
             scaffoldBackgroundColor: Colors.grey[50],
-            visualDensity:
-                VisualDensity.adaptivePlatformDensity,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.white,
               foregroundColor: Colors.black87,
               elevation: 0,
               centerTitle: true,
-              iconTheme: IconThemeData(
-                color: Colors.black87,
-              ),
+              iconTheme: IconThemeData(color: Colors.black87),
             ),
           ),
 

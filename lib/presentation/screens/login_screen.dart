@@ -30,32 +30,21 @@ class _LoginScreenState extends State<LoginScreen> {
     final password = _passCtrl.text.trim();
 
     if (email.isEmpty && password.isEmpty) {
-      MessageHelper.showError(
-        context,
-        "Please enter both Email and Password",
-      );
+      MessageHelper.showError(context, "Please enter both Email and Password");
       return;
     }
 
     if (email.isEmpty) {
-      MessageHelper.showError(
-        context,
-        "Email address is required",
-      );
+      MessageHelper.showError(context, "Email address is required");
       return;
     }
 
     if (password.isEmpty) {
-      MessageHelper.showError(
-        context,
-        "Password is required",
-      );
+      MessageHelper.showError(context, "Password is required");
       return;
     }
 
-    context.read<AuthBloc>().add(
-      LoginRequested(email, password),
-    );
+    context.read<AuthBloc>().add(LoginRequested(email, password));
   }
 
   @override
@@ -78,67 +67,44 @@ class _LoginScreenState extends State<LoginScreen> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
-              String errorText = state.error.replaceAll(
-                "Exception: ",
-                "",
-              );
+              String errorText = state.error.replaceAll("Exception: ", "");
 
               MessageHelper.showError(context, errorText);
             } else if (state is AuthSuccess) {
-              MessageHelper.showSuccess(
-                context,
-                "Login Successful!",
-              );
+              MessageHelper.showSuccess(context, "Login Successful!");
 
-              Future.delayed(
-                const Duration(milliseconds: 200),
-                () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          const CustomerListScreen(),
-                    ),
-                  );
-                },
-              );
+              Future.delayed(const Duration(milliseconds: 200), () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => const CustomerListScreen()),
+                );
+              });
             }
           },
           builder: (context, state) {
             return SafeArea(
               child: Center(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
                         height: 90,
                         width: 90,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(
-                            0.1,
-                          ),
-                          borderRadius:
-                              BorderRadius.circular(18),
-                          border: Border.all(
-                            color: Colors.white30,
-                            width: 1,
-                          ),
+                          color: Colors.white.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(color: Colors.white30, width: 1),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black
-                                  .withOpacity(0.1),
+                              color: Colors.black.withOpacity(0.1),
                               blurRadius: 10,
                               offset: const Offset(0, 4),
                             ),
                           ],
                         ),
                         child: const Column(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
                               Icons.receipt_long_rounded,
@@ -170,10 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 4),
                       const Text(
                         "Sign in to manage your invoices",
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 13,
-                        ),
+                        style: TextStyle(color: Colors.white70, fontSize: 13),
                       ),
                       const SizedBox(height: 20),
                       _buildGlassTextField(
@@ -192,15 +155,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           icon: Icon(
                             _isPasswordVisible
                                 ? Icons.visibility_rounded
-                                : Icons
-                                      .visibility_off_rounded,
+                                : Icons.visibility_off_rounded,
                             color: Colors.white70,
                             size: 20,
                           ),
                           onPressed: () {
                             setState(() {
-                              _isPasswordVisible =
-                                  !_isPasswordVisible;
+                              _isPasswordVisible = !_isPasswordVisible;
                             });
                           },
                         ),
@@ -210,14 +171,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextButton(
                           onPressed: () {},
                           style: TextButton.styleFrom(
-                            padding:
-                                const EdgeInsets.symmetric(
-                                  vertical: 0,
-                                  horizontal: 8,
-                                ),
-                            tapTargetSize:
-                                MaterialTapTargetSize
-                                    .shrinkWrap,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 0,
+                              horizontal: 8,
+                            ),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
                           child: const Text(
                             "Forgot Password?",
@@ -237,24 +195,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
                               colors: [
-                                Color.fromARGB(
-                                  255,
-                                  211,
-                                  65,
-                                  255,
-                                ),
-                                Color.fromARGB(
-                                  255,
-                                  43,
-                                  255,
-                                  156,
-                                ),
+                                Color.fromARGB(255, 211, 65, 255),
+                                Color.fromARGB(255, 43, 255, 156),
                               ],
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
                             ),
-                            borderRadius:
-                                BorderRadius.circular(14),
+                            borderRadius: BorderRadius.circular(14),
                             boxShadow: [
                               BoxShadow(
                                 color: const Color.fromARGB(
@@ -270,15 +217,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Colors.transparent,
-                              shadowColor:
-                                  Colors.transparent,
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
                               shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(
-                                      14,
-                                    ),
+                                borderRadius: BorderRadius.circular(14),
                               ),
                             ),
                             onPressed: state is AuthLoading
@@ -288,19 +230,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ? const SizedBox(
                                     height: 20,
                                     width: 20,
-                                    child:
-                                        CircularProgressIndicator(
-                                          color:
-                                              Colors.white,
-                                          strokeWidth: 2,
-                                        ),
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
                                   )
                                 : const Text(
                                     "LOGIN",
                                     style: TextStyle(
                                       fontSize: 16,
-                                      fontWeight:
-                                          FontWeight.bold,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                       letterSpacing: 1.2,
                                     ),
@@ -310,8 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 16),
                       Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
                             "Don't have an account? ",
@@ -328,10 +266,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.yellowAccent,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
-                                decoration: TextDecoration
-                                    .underline,
-                                decorationColor:
-                                    Colors.yellowAccent,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.yellowAccent,
                               ),
                             ),
                           ),
@@ -359,10 +295,7 @@ class _LoginScreenState extends State<LoginScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(
-            left: 4,
-            bottom: 4,
-          ),
+          padding: const EdgeInsets.only(left: 4, bottom: 4),
           child: Text(
             label,
             style: const TextStyle(
@@ -377,25 +310,16 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.15),
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.25),
-            ),
+            border: Border.all(color: Colors.white.withOpacity(0.25)),
           ),
           child: TextField(
             controller: controller,
             obscureText: isObscure,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
+            style: const TextStyle(color: Colors.white, fontSize: 14),
             cursorColor: Colors.white,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
-              prefixIcon: Icon(
-                icon,
-                color: Colors.white70,
-                size: 20,
-              ),
+              prefixIcon: Icon(icon, color: Colors.white70, size: 20),
               suffixIcon: suffixIcon,
               border: InputBorder.none,
               isDense: true,

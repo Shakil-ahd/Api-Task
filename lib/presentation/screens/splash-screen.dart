@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -32,14 +32,8 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     _slideAnimation =
-        Tween<Offset>(
-          begin: const Offset(0, 0.5),
-          end: Offset.zero,
-        ).animate(
-          CurvedAnimation(
-            parent: _mainController,
-            curve: Curves.easeOutCubic,
-          ),
+        Tween<Offset>(begin: const Offset(0, 0.5), end: Offset.zero).animate(
+          CurvedAnimation(parent: _mainController, curve: Curves.easeOutCubic),
         );
 
     _mainController.forward();
@@ -53,17 +47,11 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) {
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
-            pageBuilder: (_, __, ___) =>
-                const LoginScreen(),
+            pageBuilder: (_, __, ___) => const LoginScreen(),
             transitionsBuilder: (_, animation, __, child) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
+              return FadeTransition(opacity: animation, child: child);
             },
-            transitionDuration: const Duration(
-              milliseconds: 800,
-            ),
+            transitionDuration: const Duration(milliseconds: 800),
           ),
         );
       }
@@ -106,9 +94,7 @@ class _SplashScreenState extends State<SplashScreen>
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(
-                            0.2,
-                          ),
+                          color: Colors.black.withOpacity(0.2),
                           blurRadius: 20,
                           offset: const Offset(0, 10),
                         ),
@@ -159,12 +145,9 @@ class _SplashScreenState extends State<SplashScreen>
                         child: CircularProgressIndicator(
                           value: 1.0,
                           strokeWidth: 2,
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(
-                                Colors.white.withOpacity(
-                                  0.2,
-                                ),
-                              ),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white.withOpacity(0.2),
+                          ),
                         ),
                       ),
 
@@ -172,10 +155,7 @@ class _SplashScreenState extends State<SplashScreen>
                         animation: _loaderController,
                         builder: (context, child) {
                           return Transform.rotate(
-                            angle:
-                                _loaderController.value *
-                                2 *
-                                math.pi,
+                            angle: _loaderController.value * 2 * math.pi,
                             child: child,
                           );
                         },
@@ -186,10 +166,9 @@ class _SplashScreenState extends State<SplashScreen>
                             strokeWidth: 4,
                             value: 0.25,
                             strokeCap: StrokeCap.round,
-                            valueColor:
-                                AlwaysStoppedAnimation<
-                                  Color
-                                >(Colors.white),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
+                            ),
                           ),
                         ),
                       ),

@@ -5,16 +5,12 @@ import '../../utils/app_constants.dart';
 class CustomerDetailScreen extends StatelessWidget {
   final CustomerModel customer;
 
-  const CustomerDetailScreen({
-    Key? key,
-    required this.customer,
-  }) : super(key: key);
+  const CustomerDetailScreen({super.key, required this.customer});
 
   @override
   Widget build(BuildContext context) {
     final imageUrl =
-        (customer.imagePath != null &&
-            customer.imagePath!.isNotEmpty)
+        (customer.imagePath != null && customer.imagePath!.isNotEmpty)
         ? "${ApiConstants.imageBase}${customer.imagePath}"
         : "";
 
@@ -54,10 +50,7 @@ class CustomerDetailScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 3,
-                        ),
+                        border: Border.all(color: Colors.white, width: 3),
                       ),
                       child: CircleAvatar(
                         radius: 60,
@@ -134,8 +127,7 @@ class CustomerDetailScreen extends StatelessWidget {
                       _buildDetailCard(
                         Icons.history_rounded,
                         "Last Transaction",
-                        customer.lastTransactionDate ??
-                            "N/A",
+                        customer.lastTransactionDate ?? "N/A",
                         Colors.blue,
                       ),
                     ],
@@ -199,12 +191,8 @@ class CustomerDetailScreen extends StatelessWidget {
                   value,
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: isBold
-                        ? FontWeight.bold
-                        : FontWeight.w600,
-                    color: isBold
-                        ? Colors.red
-                        : Colors.black87,
+                    fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
+                    color: isBold ? Colors.red : Colors.black87,
                   ),
                 ),
               ],

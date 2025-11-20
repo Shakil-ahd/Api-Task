@@ -9,7 +9,7 @@ import '../widgets/loading_shimmer.dart';
 import 'user_setting_screen.dart';
 
 class CustomerListScreen extends StatelessWidget {
-  const CustomerListScreen({Key? key}) : super(key: key);
+  const CustomerListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CustomerListScreen extends StatelessWidget {
 }
 
 class _CustomerListView extends StatelessWidget {
-  const _CustomerListView({Key? key}) : super(key: key);
+  const _CustomerListView();
 
   Future<void> _onRefresh(BuildContext context) async {
     context.read<CustomerBloc>().add(CustomerFetchEvent(page: 1));

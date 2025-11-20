@@ -4,7 +4,7 @@ import '../../utils/app_constants.dart';
 import 'login_screen.dart';
 
 class UserDetailsScreen extends StatelessWidget {
-  const UserDetailsScreen({Key? key}) : super(key: key);
+  const UserDetailsScreen({super.key});
 
   Future<void> _logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
@@ -12,9 +12,7 @@ class UserDetailsScreen extends StatelessWidget {
 
     if (context.mounted) {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (_) => const LoginScreen(),
-        ),
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
         (route) => false,
       );
     }
@@ -25,10 +23,7 @@ class UserDetailsScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text(
-          "Settings",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: const Text("Settings", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
@@ -72,10 +67,7 @@ class UserDetailsScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   const Text(
                     "Logged In",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   const Text(
@@ -91,24 +83,17 @@ class UserDetailsScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.redAccent,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 14,
-                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         elevation: 2,
                       ),
                       onPressed: () => _logout(context),
-                      icon: const Icon(
-                        Icons.logout_rounded,
-                      ),
+                      icon: const Icon(Icons.logout_rounded),
                       label: const Text(
                         "LOG OUT",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
